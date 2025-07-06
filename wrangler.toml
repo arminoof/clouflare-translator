@@ -1,0 +1,19 @@
+name = "cloudflare-translator"
+main = "src/http-worker.js" # ورکر اصلی که به درخواست‌ها پاسخ می‌دهد
+compatibility_date = "2023-10-30"
+
+# تعریف ورکر صف به عنوان یک سرویس جداگانه
+[[services]]
+binding = "QUEUE_WORKER" # نامی که در کد برای دسترسی به این سرویس استفاده می‌شود
+service = "queue-worker" # نام واقعی ورکر صف شما در کلادفلر
+
+# اتصال دیتابیس D1
+[[d1_databases]]
+binding = "DB"
+database_name = "translator-db"
+database_id = "YOUR_D1_DATABASE_ID" # این را می‌توانید خالی بگذارید
+
+# اتصال صف برای ارسال پیام
+[[queues.producers]]
+queue = "video-processing-queue"
+binding = "VIDEO_QUEUE"
